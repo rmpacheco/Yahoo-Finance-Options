@@ -1,5 +1,4 @@
 from sqlalchemy import create_engine
-from conf import config
 
 
 #a table for stocks (1 to many) connected to Expiration (1 to many) connected to Calls and Puts.
@@ -81,28 +80,32 @@ tables = {
 }
 
 
-def setup(cursor, reset = False):
-    db_name = config['database']
+# def setup(cursor, reset = False):
+#     db_name = config['database']
     
-    if reset:
-        cursor.execute(f"DROP DATABASE {db_name}")
-    try:    
-        cursor.execute(f"CREATE DATABASE {db_name}")
-        print(f'Created Database {db_name}')
-    except:
-        ...
+#     if reset:
+#         cursor.execute(f"DROP DATABASE {db_name}")
+#     try:    
+#         cursor.execute(f"CREATE DATABASE {db_name}")
+#         print(f'Created Database {db_name}')
+#     except:
+#         ...
         
 
-    cursor.execute(f"USE {db_name};")
-    for table_val in tables.values():
-        cursor.execute(table_val)
+#     cursor.execute(f"USE {db_name};")
+#     for table_val in tables.values():
+#         cursor.execute(table_val)
         
     
+def get_alchemy_engine_sqlite3():
+    conn_string = 'sqlite:///stocks.db'
+    return create_engine(conn_string)
     
-def get_alchemy_engine(config):
-    user = config['user']
-    password = config['password']
-    host = config['host']
-    db_name = config['database']
     
-    return create_engine(f'mysql+pymysql://{user}:{password}@{host}/{db_name}')
+# def get_alchemy_engine_pymysql(config):
+#     user = config['user']
+#     password = config['password']
+#     host = config['host']
+#     db_name = config['database']
+    
+#     return create_engine(f'mysql+pymysql://{user}:{password}@{host}/{db_name}')
